@@ -20,17 +20,6 @@ class ViewController: UIViewController {
 
     
     @IBAction func didTouchCardButton(_ sender: UIButton) {
-        print("I am touching the \((sender.titleLabel?.text)!) card")
-        if (sender.titleLabel?.font.pointSize == 60) {
-            print("hiding card...")
-            sender.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-            sender.titleLabel?.font = sender.titleLabel?.font.withSize(1)
-        } else {
-            print("showing card...")
-            sender.backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
-            sender.titleLabel?.font = sender.titleLabel?.font.withSize(60)
-        }
-        
         game.updateFlips(indexOfCardChosen: cardButtons.firstIndex(of: sender)!)
         updateViewFromModel()
     }
@@ -40,7 +29,15 @@ class ViewController: UIViewController {
     }
     
     func updateCardButtons() {
-        
+        for index in game.cards.indices {
+            if game.cards[index].isSelected {
+                cardButtons[index].setTitle("\(game.cards[index].id)", for: UIControl.State.normal)
+                cardButtons[index].backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+            } else {
+                cardButtons[index].setTitle("", for: UIControl.State.normal)
+                cardButtons[index].backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            }
+        }
     }
     
     func updateViewFromModel() {

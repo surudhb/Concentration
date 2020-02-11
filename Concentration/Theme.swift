@@ -28,7 +28,7 @@ class Theme {
     let WINTER_EMOJIS = ["","","",""]
     let SPRING_EMOJIS = [""]
     let SUMMER_EMOJIS = [""]
-    let FALL_EMOJIS = ["🎃", "💀", "👻", "🌚", "😱", "😰", "☠️", "😈", "🧛🏻‍♂️", "🧟‍♀️", "🧝🏻‍♀️", "🤡", "👽"]
+    let FALL_EMOJIS = ["🎃", "💀", "👻", "🌚", "😱", "😰", "☠️", "😈", "🧛🏻‍♂️", "🧟‍♀️", "🧝🏻‍♀️", "🤡", "👽", "🍁","🦇"]
     
     func getUniquelyThemedEmojis(count: Int) -> [String] {
         switch myTheme {

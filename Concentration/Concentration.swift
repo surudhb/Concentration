@@ -31,7 +31,8 @@ class Concentration {
             cards[swapIndex] = temp
         }
     }
-    
+
+//    TODO: implement a way to end the game and store final score
     func endGame() {}
     
     func restartGame() {
@@ -39,38 +40,31 @@ class Concentration {
         initGame()
     }
     
-    func checkForMatch(first: Int, second: Int) {
-        if(cards[first].id == cards[second].id) {
-            cards[first].isMatched = true
-            cards[second].isMatched = true
-        } else {
-            cards[first].isSelected = false
-            cards[second].isSelected = false
-        }
+    func matchingCardsSelected(_ first: Int,_ second: Int) -> Bool {
+        return cards[first].id == cards[second].id
     }
-    
     
     
     func updateFlips(indexOfCardChosen: Int) {
-        if(prevFlippedCardIndex > 0) {
-//            there is another card already selected
-            if(prevFlippedCardIndex == indexOfCardChosen) {
-//                unselect selected card
-                cards[prevFlippedCardIndex].isSelected = !cards[prevFlippedCardIndex].isSelected
-                prevFlippedCardIndex = -1
-            } else {
-//            select new card
-                cards[indexOfCardChosen].isSelected = !cards[prevFlippedCardIndex].isSelected
-//            two cards selected, play round
-                checkForMatch(first: prevFlippedCardIndex, second: indexOfCardChosen)
-                prevFlippedCardIndex = -1
-            }
-        } else {
-//            there is no other card selected
-            cards[indexOfCardChosen].isSelected = !cards[indexOfCardChosen].isSelected
+        if prevFlippedCardIndex == -1 {
+            cards[indexOfCardChosen].isSelected = true
             prevFlippedCardIndex = indexOfCardChosen
+        } else {
+            if prevFlippedCardIndex == indexOfCardChosen {
+                cards[indexOfCardChosen].isSelected = false
+            } else {
+                if matchingCardsSelected(indexOfCardChosen, prevFlippedCardIndex) {
+                    cards[indexOfCardChosen].isSelected = true
+                    cards[indexOfCardChosen].isMatched = true
+                    cards[prevFlippedCardIndex].isMatched = true
+                } else {
+                    cards[indexOfCardChosen].isSelected = true
+                    cards[prevFlippedCardIndex].isSelected = false
+                    cards[indexOfCardChosen].isSelected = false
+                }
+            }
+            prevFlippedCardIndex = -1
         }
         cardFlips += 1
     }
-
 }
