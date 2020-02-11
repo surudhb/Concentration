@@ -13,6 +13,9 @@
 		E82F8DF523F201980061FA95 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E82F8DF323F201980061FA95 /* Main.storyboard */; };
 		E82F8DF723F201990061FA95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E82F8DF623F201990061FA95 /* Assets.xcassets */; };
 		E82F8DFA23F201990061FA95 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E82F8DF823F201990061FA95 /* LaunchScreen.storyboard */; };
+		E82F8E0323F20CE90061FA95 /* Concentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82F8E0223F20CE90061FA95 /* Concentration.swift */; };
+		E82F8E0523F210E40061FA95 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82F8E0423F210E40061FA95 /* Card.swift */; };
+		E82F8E0923F225F10061FA95 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82F8E0823F225F10061FA95 /* Theme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		E82F8DF623F201990061FA95 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E82F8DF923F201990061FA95 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E82F8DFB23F201990061FA95 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E82F8E0223F20CE90061FA95 /* Concentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Concentration.swift; sourceTree = "<group>"; };
+		E82F8E0423F210E40061FA95 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		E82F8E0823F225F10061FA95 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +65,9 @@
 				E82F8E0123F201EB0061FA95 /* Supporting Files */,
 				E82F8DF123F201980061FA95 /* ViewController.swift */,
 				E82F8DF323F201980061FA95 /* Main.storyboard */,
+				E82F8E0823F225F10061FA95 /* Theme.swift */,
+				E82F8E0223F20CE90061FA95 /* Concentration.swift */,
+				E82F8E0423F210E40061FA95 /* Card.swift */,
 				E82F8DFB23F201990061FA95 /* Info.plist */,
 			);
 			path = Concentration;
@@ -148,7 +157,10 @@
 			files = (
 				E82F8DF223F201980061FA95 /* ViewController.swift in Sources */,
 				E82F8DEE23F201980061FA95 /* AppDelegate.swift in Sources */,
+				E82F8E0523F210E40061FA95 /* Card.swift in Sources */,
+				E82F8E0923F225F10061FA95 /* Theme.swift in Sources */,
 				E82F8DF023F201980061FA95 /* SceneDelegate.swift in Sources */,
+				E82F8E0323F20CE90061FA95 /* Concentration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
