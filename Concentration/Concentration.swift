@@ -13,37 +13,46 @@ class Concentration {
     var cardFlips = 0
     var cards = [Card]()
     var prevFlippedCardIndex = -1
+    var numUniqueCards = 0
 
     init(numberOfUniqueCards: Int) {
-        for _ in 1...numberOfUniqueCards {
-            let card = Card()
-            cards += [card, card]
-        }
+        numUniqueCards = numberOfUniqueCards
         initGame()
     }
     
+    func createDeck() {
+        for _ in 1...numUniqueCards {
+            let card = Card()
+            cards += [card, card]
+        }
+    }
     
     func initGame() {
-        for index in cards.indices {
-            let swapIndex = Int(arc4random_uniform(UInt32(cards.count)))
-            let temp = cards[index]
-            cards[index] = cards[swapIndex]
-            cards[swapIndex] = temp
-        }
+        createDeck()
+        cards.shuffle()
     }
 
 //    TODO: implement a way to end the game and store final score
-    func endGame() {}
+    func endGame() {
+        cards = []
+        cardFlips = 0
+    }
     
     func restartGame() {
         endGame()
         initGame()
     }
     
+    func isGameOver() -> Bool {
+        for card in cards {
+            if(!card.isSelected) { return false }
+        }
+        return true
+    }
+ 
     func matchingCardsSelected(_ first: Int,_ second: Int) -> Bool {
         return cards[first].id == cards[second].id
     }
-    
     
     func updateFlips(indexOfCardChosen: Int) {
         if prevFlippedCardIndex == -1 {
@@ -64,6 +73,7 @@ class Concentration {
                 }
             }
             prevFlippedCardIndex = -1
+            if isGameOver() { restartGame() }
         }
         cardFlips += 1
     }
