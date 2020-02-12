@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     
 //    Making it lazy so that initialization is "complete" when variable is used
     lazy var game = Concentration(numberOfUniqueCards: cardButtons.count/2)
-    var theme = Theme(season: Theme.Season.Fall)
+    var theme = ThemeGenerator(season: ThemeGenerator.Theme.Fall)
 
     
     @IBAction func didTouchCardButton(_ sender: UIButton) {
