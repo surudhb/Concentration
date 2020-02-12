@@ -12,49 +12,54 @@ import Foundation
 
 class ThemeGenerator {
     
-    enum Theme {
-        case Winter
-        case Spring
-        case Summer
-        case Fall
+    enum Theme : String {
+        case WINTER
+        case SPRING
+        case SUMMER
+        case FALL
     }
     
-    var chosenTheme = Theme.Fall
+    var chosenTheme = Theme.FALL
+    var numVisualsDesired = 0
+    var validVisualsKeyname = ""
+    var validVisualIndices = [Int]()
     
-    init(chosenTheme: ThemeGenerator.Theme) {
+    init(chosenTheme: ThemeGenerator.Theme, visualsDesired: Int) {
         self.chosenTheme = chosenTheme
+        numVisualsDesired = visualsDesired
+        validVisualIndices = getThemedVisuals()
+        validVisualsKeyname = chosenTheme.rawValue
     }
+    
 //    atleast 10 each
-    let WINTER_EMOJIS = Set(["🏂", "❄️", "⛄️", "🎿", "🥶", "⛷", "☃️", "☕️", "🧊", "⛸", "🏒", "🎅🏻", "🤧", "🤒", "🤶🏻", "🧶", "🐻"])
-    let SPRING_EMOJIS = Set(["🌷", "🌸", "🌼", "🌧", "🌈", "🌦", "🛀🏻", "🚿", "🐛", "🐞", "🍃", "🍏", "🦋", "🌴", "⛹🏻‍♂️", "⚽️", "🐣"])
-    let SUMMER_EMOJIS = Set(["🏄🏻‍♀️", "🤽🏻", "🧗🏻‍♀️", "🏏", "🍹", "🥑", "🍎", "☀️", "🌺", "🎋", "🐳", "🧜🏻‍♀️", "🥵", "🏖", "🏊🏻‍♀️", "🏕", "😎"])
-    let FALL_EMOJIS = Set(["🎃", "💀", "👻", "🎐", "😱", "😰", "☠️", "😈", "🧛🏻‍♂️", "🧟‍♀️", "🦸🏻‍♀️", "🧝🏻‍♀️", "🤡", "👽", "🍁","🦇", "🏜"])
+//    TODO: Move to json file
+    let visuals = [
+        "WINTER" : ["🏂", "❄️", "⛄️", "🎿", "🥶", "⛷", "☃️", "☕️", "🧊", "⛸", "🏒", "🎅🏻", "🤧", "🤒", "🤶🏻", "🧶", "🐻"],
+        "SPRING" : ["🌷", "🌸", "🌼", "🌧", "🌈", "🌦", "🛀🏻", "🚿", "🐛", "🐞", "🍃", "🍏", "🦋", "🌴", "⛹🏻‍♂️", "⚽️", "🐣"],
+        "SUMMER" : ["🏄🏻‍♀️", "🤽🏻", "🧗🏻‍♀️", "🏏", "🍹", "🥑", "🍎", "☀️", "🌺", "🎋", "🐳", "🧜🏻‍♀️", "🥵", "🏖", "🏊🏻‍♀️", "🏕", "😎"],
+        "FALL" : ["🎃", "💀", "👻", "🎐", "😱", "😰", "☠️", "😈", "🧛🏻‍♂️", "🧟‍♀️", "🦸🏻‍♀️", "🧝🏻‍♀️", "🤡", "👽", "🍁","🦇", "🏜"]
+    ]
     
-    func getUniquelyThemedEmojis(emojisDesired: Int) -> Set<String> {
+    func getThemedVisuals() -> [Int] {
         switch chosenTheme {
-            case .Winter:
-                return getUniquelyThemedEmojisHelper(emojisDesired, WINTER_EMOJIS)
-            case .Spring:
-                return getUniquelyThemedEmojisHelper(emojisDesired, SPRING_EMOJIS)
-            case .Summer:
-                return getUniquelyThemedEmojisHelper(emojisDesired, SUMMER_EMOJIS)
-            case .Fall:
-                return getUniquelyThemedEmojisHelper(emojisDesired, FALL_EMOJIS)
+            case .WINTER:
+                return getThemedVisualsHelper(visuals[Theme.WINTER.rawValue]!)
+            case .SPRING:
+                return getThemedVisualsHelper(visuals[Theme.SPRING.rawValue]!)
+            case .SUMMER:
+                return getThemedVisualsHelper(visuals[Theme.SUMMER.rawValue]!)
+            case .FALL:
+                return getThemedVisualsHelper(visuals[Theme.FALL.rawValue]!)
         }
     }
     
-    func getUniquelyThemedEmojisHelper(_ emojisDesired: Int,_ emojiSet: Set<String>) -> Set<String> {
-        let emojisAvailable = emojiSet.count
-        if(emojisDesired >= emojisAvailable) {
-            return emojiSet
+//    if desired emojis > available, return all indices else return an array of size desired with random indices from the theme
+    func getThemedVisualsHelper(_ visualSet: [String]) -> [Int] {
+        let visualsAvailable = visualSet.count
+        if(numVisualsDesired >= visualsAvailable) {
+            return Array(visualSet.indices)
         } else {
-            var emojiSubset = Set<String>()
-            repeat {
-                emojiSubset.insert(emojiSet.randomElement()!)
-            } while(emojiSubset.count < emojisDesired)
-            return emojiSubset
+            return Array(Array(visualSet.indices).shuffled().prefix(numVisualsDesired))
         }
     }
-    
-    
 }
