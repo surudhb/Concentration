@@ -8,7 +8,7 @@
 //  Returns the valid set of emojis to be used with the selected theme
 
 import Foundation
-
+import UIKit
 
 class ThemeGenerator {
     
@@ -21,15 +21,23 @@ class ThemeGenerator {
     
     var chosenTheme = Theme.FALL
     var numVisualsDesired = 0
-    var validVisualsKeyname = ""
+    var themeKeyname = ""
     var validVisualIndices = [Int]()
     
     init(chosenTheme: ThemeGenerator.Theme, visualsDesired: Int) {
         self.chosenTheme = chosenTheme
         numVisualsDesired = visualsDesired
         validVisualIndices = getThemedVisuals()
-        validVisualsKeyname = chosenTheme.rawValue
+        themeKeyname = chosenTheme.rawValue
     }
+    
+//    theme : [cardfacedown, cardfaceup, background]
+    let colorPalette : [String:[UIColor]] = [
+        "WINTER" : [UIColor.red, UIColor.blue, UIColor.white],
+        "SPRING" : [UIColor.green, UIColor.yellow, UIColor.cyan],
+        "SUMMER" : [UIColor.orange, UIColor.red, UIColor.yellow],
+        "FALL" : [UIColor.red, UIColor.black, UIColor.orange]
+    ]
     
     let visuals = [
         "WINTER" : ["🏂", "❄️", "⛄️", "🎿", "🥶", "⛷", "☃️", "☕️", "🧊", "⛸", "🏒", "🎅🏻", "🤧", "🤒", "🤶🏻", "🧶", "🐻"],

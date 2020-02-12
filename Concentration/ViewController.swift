@@ -23,8 +23,12 @@ class ViewController: UIViewController {
     
     func initCardVisualMap() -> [Int:Int] {
         var tempMap = [Int:Int]()
-        for index in 0..<cardButtons.count/2 {
-            tempMap[index + 1] = theme.validVisualIndices[index]
+        var it = 0
+        for index in 0..<game.cards.count {
+            if tempMap[game.cards[index].id] == nil {
+                tempMap[game.cards[index].id] = theme.validVisualIndices[it]
+                it += 1
+            }
         }
         return tempMap
     }
@@ -40,12 +44,12 @@ class ViewController: UIViewController {
     
     func updateCardButtons() {
         for index in game.cards.indices {
-            if game.cards[index].isSelected {
-                cardButtons[index].setTitle("\(theme.visuals[theme.validVisualsKeyname]![cardToVisualMap[game.cards[index].id]!])", for: UIControl.State.normal)
-                cardButtons[index].backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+            if game.cards[index].isSelected || game.cards[index].isMatched  {
+                cardButtons[index].setTitle("\(theme.visuals[theme.themeKeyname]![cardToVisualMap[game.cards[index].id]!])", for: UIControl.State.normal)
+                cardButtons[index].backgroundColor = game.cards[index].isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : theme.colorPalette[theme.themeKeyname]![1]
             } else {
                 cardButtons[index].setTitle("", for: UIControl.State.normal)
-                cardButtons[index].backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                cardButtons[index].backgroundColor = theme.colorPalette[theme.themeKeyname]![0]
             }
         }
     }

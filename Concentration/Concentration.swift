@@ -14,6 +14,7 @@ class Concentration {
     var cards = [Card]()
     var prevFlippedCardIndex = -1
     var numUniqueCards = 0
+    var numCardsSelected = 0
 
     init(numberOfUniqueCards: Int) {
         numUniqueCards = numberOfUniqueCards
@@ -43,11 +44,30 @@ class Concentration {
         initGame()
     }
     
-    func isGameOver() -> Bool {
-        for card in cards {
-            if(!card.isSelected) { return false }
+    func updateMatches() {
+        let selectedCards = cards.filter{ $0.isSelected }
+        if selectedCards.count == 2 && selectedCards[0].id == selectedCards[1].id {
+            cards = cards.map{(card) -> Card in
+                var tempCard = card
+                if card.id == selectedCards[0].id || card.id == selectedCards[1].id {
+                    tempCard.isMatched = true
+                }
+                return tempCard
+            }
         }
-        return true
+    }
+    
+    
+    func isGameOver() -> Bool {
+        return cards.filter { !$0.isMatched }.count == 0
+    }
+    
+    func resetSelectedState() {
+        cards = cards.map{(card) -> Card in
+            var tempCard = card
+            tempCard.isSelected = false
+            return tempCard
+        }
     }
  
     func matchingCardsSelected(_ first: Int,_ second: Int) -> Bool {
@@ -55,25 +75,23 @@ class Concentration {
     }
     
     func updateFlips(indexOfCardChosen: Int) {
-        if prevFlippedCardIndex == -1 {
-            cards[indexOfCardChosen].isSelected = true
-            prevFlippedCardIndex = indexOfCardChosen
-        } else {
-            if prevFlippedCardIndex == indexOfCardChosen {
+        if !cards[indexOfCardChosen].isMatched {
+//            selected card unselected
+            if cards[indexOfCardChosen].isSelected {
                 cards[indexOfCardChosen].isSelected = false
+                numCardsSelected -= 1
+            } else if numCardsSelected == 2 {
+//                third card selected
+                resetSelectedState()
+                cards[indexOfCardChosen].isSelected = true
+                numCardsSelected = 1
             } else {
-                if matchingCardsSelected(indexOfCardChosen, prevFlippedCardIndex) {
-                    cards[indexOfCardChosen].isSelected = true
-                    cards[indexOfCardChosen].isMatched = true
-                    cards[prevFlippedCardIndex].isMatched = true
-                } else {
-                    cards[indexOfCardChosen].isSelected = true
-                    cards[prevFlippedCardIndex].isSelected = false
-                    cards[indexOfCardChosen].isSelected = false
-                }
+//                0 or 1 card already selected
+                numCardsSelected += 1
+                cards[indexOfCardChosen].isSelected = true
+                updateMatches()
             }
-            prevFlippedCardIndex = -1
+            if isGameOver() { restartGame() } else { cardFlips += 1 }
         }
-        if isGameOver() { restartGame() } else { cardFlips += 1 }
     }
 }
