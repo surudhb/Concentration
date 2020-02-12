@@ -54,12 +54,13 @@ class ThemeGenerator {
     }
     
 //    if desired emojis > available, return all indices else return an array of size desired with random indices from the theme
-    func getThemedVisualsHelper(_ visualSet: [String]) -> [Int] {
-        let visualsAvailable = visualSet.count
+    func getThemedVisualsHelper(_ visuals: [String]) -> [Int] {
+        let visualsAvailable = visuals.count
         if(numVisualsDesired >= visualsAvailable) {
-            return Array(visualSet.indices)
+            return Array(visuals.indices)
         } else {
-            return Array(Array(visualSet.indices).shuffled().prefix(numVisualsDesired))
+            let temp = Array(Array(visuals.indices).shuffled().prefix(numVisualsDesired))
+            return temp
         }
     }
 }
