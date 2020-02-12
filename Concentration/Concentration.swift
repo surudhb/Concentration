@@ -32,7 +32,6 @@ class Concentration {
         cards.shuffle()
     }
 
-//    TODO: implement a way to end the game and store final score
     func endGame() {
         Card.resetUUIDGenerator()
         cards = []
