@@ -34,6 +34,7 @@ class Concentration {
 
 //    TODO: implement a way to end the game and store final score
     func endGame() {
+        Card.resetUUIDGenerator()
         cards = []
         cardFlips = 0
     }
@@ -73,8 +74,7 @@ class Concentration {
                 }
             }
             prevFlippedCardIndex = -1
-            if isGameOver() { restartGame() }
         }
-        cardFlips += 1
+        if isGameOver() { restartGame() } else { cardFlips += 1 }
     }
 }

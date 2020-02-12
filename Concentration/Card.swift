@@ -18,4 +18,8 @@ struct Card {
         unusedID += 1
         return unusedID
     }
+    
+    static func resetUUIDGenerator() {
+        unusedID = 0
+    }
 }
