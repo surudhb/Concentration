@@ -31,8 +31,6 @@ class ThemeGenerator {
         validVisualsKeyname = chosenTheme.rawValue
     }
     
-//    atleast 10 each
-//    TODO: Move to json file
     let visuals = [
         "WINTER" : ["🏂", "❄️", "⛄️", "🎿", "🥶", "⛷", "☃️", "☕️", "🧊", "⛸", "🏒", "🎅🏻", "🤧", "🤒", "🤶🏻", "🧶", "🐻"],
         "SPRING" : ["🌷", "🌸", "🌼", "🌧", "🌈", "🌦", "🛀🏻", "🚿", "🐛", "🐞", "🍃", "🍏", "🦋", "🌴", "⛹🏻‍♂️", "⚽️", "🐣"],
@@ -59,8 +57,7 @@ class ThemeGenerator {
         if(numVisualsDesired >= visualsAvailable) {
             return Array(visuals.indices)
         } else {
-            let temp = Array(Array(visuals.indices).shuffled().prefix(numVisualsDesired))
-            return temp
+            return Array(Array(visuals.indices).shuffled().prefix(numVisualsDesired))
         }
     }
 }
