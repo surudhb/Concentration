@@ -19,10 +19,10 @@ class ThemeGenerator {
         case FALL
     }
     
-    var chosenTheme = Theme.FALL
-    var numVisualsDesired = 0
-    var themeKeyname = ""
-    var validVisualIndices = [Int]()
+    public var chosenTheme = Theme.FALL
+    private var numVisualsDesired = 0
+    private(set) var themeKeyname = ""
+    private(set) var validVisualIndices = [Int]()
     
     init(chosenTheme: ThemeGenerator.Theme, visualsDesired: Int) {
         self.chosenTheme = chosenTheme
@@ -32,7 +32,7 @@ class ThemeGenerator {
     }
     
 //    theme : [cardfacedown, cardfaceup, background]
-    let colorPalette : [String:[UIColor]] = [
+     let colorPalette : [String:[UIColor]] = [
         "WINTER" : [UIColor.red, UIColor.blue, UIColor.white],
         "SPRING" : [UIColor.green, UIColor.yellow, UIColor.cyan],
         "SUMMER" : [UIColor.orange, UIColor.red, UIColor.yellow],
@@ -46,7 +46,7 @@ class ThemeGenerator {
         "FALL" : ["🎃", "💀", "👻", "🎐", "😱", "😰", "☠️", "😈", "🧛🏻‍♂️", "🧟‍♀️", "🦸🏻‍♀️", "🧝🏻‍♀️", "🤡", "👽", "🍁","🦇", "🏜"]
     ]
     
-    func getThemedVisuals() -> [Int] {
+    private func getThemedVisuals() -> [Int] {
         switch chosenTheme {
             case .WINTER:
                 return getThemedVisualsHelper(visuals[Theme.WINTER.rawValue]!)
@@ -60,7 +60,7 @@ class ThemeGenerator {
     }
     
 //    if desired emojis > available, return all indices else return an array of size desired with random indices from the theme
-    func getThemedVisualsHelper(_ visuals: [String]) -> [Int] {
+    private func getThemedVisualsHelper(_ visuals: [String]) -> [Int] {
         let visualsAvailable = visuals.count
         if(numVisualsDesired >= visualsAvailable) {
             return Array(visuals.indices)

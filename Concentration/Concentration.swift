@@ -10,46 +10,47 @@ import Foundation
 
 class Concentration {
 
-    var cardFlips = 0
-    var cards = [Card]()
-    var prevFlippedCardIndex = -1
-    var numUniqueCards = 0
-    var numCardsSelected = 0
+    private(set) var cardFlips = 0
+    private(set) var cards = [Card]()
+    private var numUniqueCards = 0
+    private var numCardsSelected = 0
 
     init(numberOfUniqueCards: Int) {
         numUniqueCards = numberOfUniqueCards
         initGame()
     }
     
-    func createDeck() {
+    private func createDeck() {
         for _ in 1...numUniqueCards {
             let card = Card()
             cards += [card, card]
         }
     }
     
-    func initGame() {
+    private func initGame() {
         createDeck()
         cards.shuffle()
     }
 
-    func endGame() {
+//    TODO: Remove use of this function
+    private func endGame() {
         Card.resetUUIDGenerator()
         cards = []
         cardFlips = 0
     }
     
-    func restartGame() {
+    private func restartGame() {
         endGame()
         initGame()
     }
     
-    func updateMatches() {
+    private func updateMatches() {
+        // iterate once, store first card if nil, check against second card if not nil and set both to matched
         let selectedCards = cards.filter{ $0.isSelected }
         if selectedCards.count == 2 && selectedCards[0].id == selectedCards[1].id {
             cards = cards.map{(card) -> Card in
                 var tempCard = card
-                if card.id == selectedCards[0].id || card.id == selectedCards[1].id {
+                if selectedCards.contains(where: {$0.id == tempCard.id}) {
                     tempCard.isMatched = true
                 }
                 return tempCard
@@ -57,12 +58,11 @@ class Concentration {
         }
     }
     
-    
-    func isGameOver() -> Bool {
+    private func isGameOver() -> Bool {
         return cards.filter { !$0.isMatched }.count == 0
     }
     
-    func resetSelectedState() {
+    private func resetSelectedState() {
         cards = cards.map{(card) -> Card in
             var tempCard = card
             tempCard.isSelected = false
@@ -70,11 +70,11 @@ class Concentration {
         }
     }
  
-    func matchingCardsSelected(_ first: Int,_ second: Int) -> Bool {
+    private func matchingCardsSelected(_ first: Int,_ second: Int) -> Bool {
         return cards[first].id == cards[second].id
     }
     
-    func updateFlips(indexOfCardChosen: Int) {
+    public func updateFlips(indexOfCardChosen: Int) {
         if !cards[indexOfCardChosen].isMatched {
 //            selected card unselected
             if cards[indexOfCardChosen].isSelected {

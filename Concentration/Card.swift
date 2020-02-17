@@ -10,16 +10,16 @@ import Foundation
 
 struct Card {
     let id = Card.generateUUID()
-    var isSelected = false
-    var isMatched = false
+    public var isSelected = false
+    public var isMatched = false
     
-    static var unusedID = 0
-    static func generateUUID() -> Int {
+    private static var unusedID = 0
+    private static func generateUUID() -> Int {
         unusedID += 1
         return unusedID
     }
-    
-    static func resetUUIDGenerator() {
+//    TODO: This really shouldn't exist. Card Id's should not break game
+    public static func resetUUIDGenerator() {
         unusedID = 0
     }
 }
