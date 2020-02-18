@@ -11,16 +11,20 @@ import UIKit
 class ViewController: UIViewController {
     
     
-    @IBOutlet private weak var flipsLabel: UILabel!
-    @IBOutlet private var cardButtons: [UIButton]!
-    @IBOutlet var mainView: UIView!
+    @IBOutlet private weak var flipsLabel: UILabel! { didSet { updateFlipsLabel() } }
+    @IBOutlet private var cardButtons: [UIButton]! {
+        didSet {
+            game = Concentration(numberOfUniqueCards: cardButtons.count/2)
+            theme = ThemeGenerator(chosenTheme: ThemeGenerator.Theme.WINTER, visualsDesired: cardButtons.count/2)
+        }
+    }
+    @IBOutlet var mainView: UIView! { didSet { initView() } }
     
-    //    Making it lazy so that variable is initialized when used and not now
-    lazy private var game = Concentration(numberOfUniqueCards: cardButtons.count/2)
-    lazy private var theme = ThemeGenerator(chosenTheme: ThemeGenerator.Theme.SUMMER, visualsDesired: cardButtons.count/2)
+    private var game : Concentration!
+    private var theme : ThemeGenerator!
     
     // [card_id : visual_id]
-    lazy private var cardToVisualMap : [Card:Int] = initCardVisualMap()
+    private var cardToVisualMap = [Card:Int]()
     
     private func initCardVisualMap() -> [Card:Int] {
         var tempMap = [Card:Int]()
@@ -34,23 +38,34 @@ class ViewController: UIViewController {
         return tempMap
     }
     
+//    Acts as the init method for the main view
+    func initView() {
+        updateCardButtons()
+        cardToVisualMap = initCardVisualMap()
+    }
+    
     @IBAction private func didTouchCardButton(_ sender: UIButton) {
         game.updateFlips(indexOfCardChosen: cardButtons.firstIndex(of: sender)!)
         updateViewFromModel()
     }
     
     private func updateFlipsLabel() {
-        flipsLabel.text = "Flips: \(game.cardFlips)"
+        let attributes : [NSAttributedString.Key : Any] = [
+            .strokeWidth: 5.0,
+            .strokeColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        ]
+        let attributedString = NSAttributedString(string: "Flips: \(game.cardFlips)", attributes: attributes)
+        flipsLabel.attributedText = attributedString
     }
     
     private func updateCardButtons() {
         for (index, card) in game.cards.enumerated() {
             if card.isSelected || card.isMatched {
                 cardButtons[index].setTitle("\(theme.visuals[theme.themeKeyname]![cardToVisualMap[card]!])", for: UIControl.State.normal)
-                cardButtons[index].backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : theme.colorPalette[theme.themeKeyname]!.cardFaceDown
+                cardButtons[index].backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : theme.colorPalette[theme.themeKeyname]!.cardFaceUp
             } else {
                 cardButtons[index].setTitle("", for: UIControl.State.normal)
-                cardButtons[index].backgroundColor = theme.colorPalette[theme.themeKeyname]!.cardFaceUp
+                cardButtons[index].backgroundColor = theme.colorPalette[theme.themeKeyname]!.cardFaceDown
             }
         }
         mainView.backgroundColor = theme.colorPalette[theme.themeKeyname]!.background

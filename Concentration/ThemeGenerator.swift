@@ -34,11 +34,11 @@ class ThemeGenerator {
     }
     
 
-    let colorPalette : [String:(cardFaceDown: UIColor, cardFaceUp: UIColor, background: UIColor)] = [
-        "WINTER" : (UIColor.red, UIColor.blue, UIColor.white),
-        "SPRING" : (UIColor.green, UIColor.yellow, UIColor.cyan),
-        "SUMMER" : (UIColor.orange, UIColor.red, UIColor.yellow),
-        "FALL" : (UIColor.red, UIColor.black, UIColor.orange)
+    let colorPalette : [String:(cardFaceUp: UIColor, cardFaceDown: UIColor, background: UIColor)] = [
+        "WINTER" : (UIColor.blue, UIColor.white, UIColor.red),
+        "SPRING" : (UIColor.cyan, UIColor.yellow, UIColor.green),
+        "SUMMER" : (UIColor.red, UIColor.yellow, UIColor.cyan),
+        "FALL" : (UIColor.black, UIColor.orange, UIColor.brown)
     ]
     
     let visuals = [
