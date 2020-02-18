@@ -23,25 +23,23 @@ class ViewController: UIViewController {
     private var game : Concentration!
     private var theme : ThemeGenerator!
     
-    // [card_id : visual_id]
+    // [card : visuals_id]
     private var cardToVisualMap = [Card:Int]()
     
-    private func initCardVisualMap() -> [Card:Int] {
-        var tempMap = [Card:Int]()
+    private func initCardVisualMap() {
         var it = 0
         for card in game.cards {
-            if tempMap[card] == nil {
-                tempMap[card] = theme.validVisualIndices[it]
+            if cardToVisualMap[card] == nil {
+                cardToVisualMap[card] = theme.validVisualIndices[it]
                 it += 1
             }
         }
-        return tempMap
     }
     
 //    Acts as the init method for the main view
     func initView() {
         updateCardButtons()
-        cardToVisualMap = initCardVisualMap()
+        initCardVisualMap()
     }
     
     @IBAction private func didTouchCardButton(_ sender: UIButton) {
