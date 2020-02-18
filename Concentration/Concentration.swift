@@ -16,6 +16,7 @@ class Concentration {
     private var numCardsSelected = 0
 
     init(numberOfUniqueCards: Int) {
+        assert(numberOfUniqueCards > 0, "Must ask for atleast one unique card")
         numUniqueCards = numberOfUniqueCards
         initGame()
     }
@@ -45,7 +46,6 @@ class Concentration {
     }
     
     private func updateMatches() {
-        // iterate once, store first card if nil, check against second card if not nil and set both to matched
         let selectedCards = cards.filter{ $0.isSelected }
         if selectedCards.count == 2 && selectedCards[0].id == selectedCards[1].id {
             cards = cards.map{(card) -> Card in
@@ -62,7 +62,7 @@ class Concentration {
         return cards.filter { !$0.isMatched }.count == 0
     }
     
-    private func resetSelectedState() {
+    private func unselectAllCards() {
         cards = cards.map{(card) -> Card in
             var tempCard = card
             tempCard.isSelected = false
@@ -75,6 +75,7 @@ class Concentration {
     }
     
     public func updateFlips(indexOfCardChosen: Int) {
+        assert(cards.indices.contains(indexOfCardChosen), "Concentration.updateFlips(index): index out of bounds")
         if !cards[indexOfCardChosen].isMatched {
 //            selected card unselected
             if cards[indexOfCardChosen].isSelected {
@@ -82,7 +83,7 @@ class Concentration {
                 numCardsSelected -= 1
             } else if numCardsSelected == 2 {
 //                third card selected
-                resetSelectedState()
+                unselectAllCards()
                 cards[indexOfCardChosen].isSelected = true
                 numCardsSelected = 1
             } else {

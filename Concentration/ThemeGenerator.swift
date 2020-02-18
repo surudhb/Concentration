@@ -25,6 +25,7 @@ class ThemeGenerator {
     private(set) var validVisualIndices = [Int]()
     
     init(chosenTheme: ThemeGenerator.Theme, visualsDesired: Int) {
+        assert(visualsDesired > 1, "Theme.init(): Must ask for one or more visuals")
         self.chosenTheme = chosenTheme
         numVisualsDesired = visualsDesired
         validVisualIndices = getThemedVisuals()
