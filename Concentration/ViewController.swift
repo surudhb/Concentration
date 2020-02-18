@@ -13,20 +13,21 @@ class ViewController: UIViewController {
     
     @IBOutlet private weak var flipsLabel: UILabel!
     @IBOutlet private var cardButtons: [UIButton]!
+    @IBOutlet var mainView: UIView!
     
-//    Making it lazy so that variable is initialized when used and not now
+    //    Making it lazy so that variable is initialized when used and not now
     lazy private var game = Concentration(numberOfUniqueCards: cardButtons.count/2)
-    lazy private var theme = ThemeGenerator(chosenTheme: ThemeGenerator.Theme.SPRING, visualsDesired: cardButtons.count/2)
+    lazy private var theme = ThemeGenerator(chosenTheme: ThemeGenerator.Theme.SUMMER, visualsDesired: cardButtons.count/2)
     
     // [card_id : visual_id]
-    lazy private var cardToVisualMap : [Int:Int] = initCardVisualMap()
+    lazy private var cardToVisualMap : [Card:Int] = initCardVisualMap()
     
-    private func initCardVisualMap() -> [Int:Int] {
-        var tempMap = [Int:Int]()
+    private func initCardVisualMap() -> [Card:Int] {
+        var tempMap = [Card:Int]()
         var it = 0
-        for index in 0..<game.cards.count {
-            if tempMap[game.cards[index].id] == nil {
-                tempMap[game.cards[index].id] = theme.validVisualIndices[it]
+        for card in game.cards {
+            if tempMap[card] == nil {
+                tempMap[card] = theme.validVisualIndices[it]
                 it += 1
             }
         }
@@ -43,15 +44,16 @@ class ViewController: UIViewController {
     }
     
     private func updateCardButtons() {
-        for index in game.cards.indices {
-            if game.cards[index].isSelected || game.cards[index].isMatched  {
-                cardButtons[index].setTitle("\(theme.visuals[theme.themeKeyname]![cardToVisualMap[game.cards[index].id]!])", for: UIControl.State.normal)
-                cardButtons[index].backgroundColor = game.cards[index].isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : theme.colorPalette[theme.themeKeyname]![1]
+        for (index, card) in game.cards.enumerated() {
+            if card.isSelected || card.isMatched {
+                cardButtons[index].setTitle("\(theme.visuals[theme.themeKeyname]![cardToVisualMap[card]!])", for: UIControl.State.normal)
+                cardButtons[index].backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : theme.colorPalette[theme.themeKeyname]!.cardFaceDown
             } else {
                 cardButtons[index].setTitle("", for: UIControl.State.normal)
-                cardButtons[index].backgroundColor = theme.colorPalette[theme.themeKeyname]![0]
+                cardButtons[index].backgroundColor = theme.colorPalette[theme.themeKeyname]!.cardFaceUp
             }
         }
+        mainView.backgroundColor = theme.colorPalette[theme.themeKeyname]!.background
     }
     
     private func updateViewFromModel() {
@@ -59,5 +61,5 @@ class ViewController: UIViewController {
         updateCardButtons()
     }
     
-//    TODO: Add function to reset links to model when game restarts
+//    TODO: Currently there is no way the controller updates links when the game ends and restarts resulting in a crash. Implement "reseting the view controller"
 }

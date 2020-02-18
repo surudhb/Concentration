@@ -10,6 +10,7 @@
 import Foundation
 import UIKit
 
+// Class designed to pull data from a json given a theme keyword and store and pass only the necessary images in memory
 class ThemeGenerator {
     
     enum Theme : String {
@@ -32,12 +33,12 @@ class ThemeGenerator {
         themeKeyname = chosenTheme.rawValue
     }
     
-//    theme : [cardfacedown, cardfaceup, background]
-     let colorPalette : [String:[UIColor]] = [
-        "WINTER" : [UIColor.red, UIColor.blue, UIColor.white],
-        "SPRING" : [UIColor.green, UIColor.yellow, UIColor.cyan],
-        "SUMMER" : [UIColor.orange, UIColor.red, UIColor.yellow],
-        "FALL" : [UIColor.red, UIColor.black, UIColor.orange]
+
+    let colorPalette : [String:(cardFaceDown: UIColor, cardFaceUp: UIColor, background: UIColor)] = [
+        "WINTER" : (UIColor.red, UIColor.blue, UIColor.white),
+        "SPRING" : (UIColor.green, UIColor.yellow, UIColor.cyan),
+        "SUMMER" : (UIColor.orange, UIColor.red, UIColor.yellow),
+        "FALL" : (UIColor.red, UIColor.black, UIColor.orange)
     ]
     
     let visuals = [
@@ -48,16 +49,7 @@ class ThemeGenerator {
     ]
     
     private func getThemedVisuals() -> [Int] {
-        switch chosenTheme {
-            case .WINTER:
-                return getThemedVisualsHelper(visuals[Theme.WINTER.rawValue]!)
-            case .SPRING:
-                return getThemedVisualsHelper(visuals[Theme.SPRING.rawValue]!)
-            case .SUMMER:
-                return getThemedVisualsHelper(visuals[Theme.SUMMER.rawValue]!)
-            case .FALL:
-                return getThemedVisualsHelper(visuals[Theme.FALL.rawValue]!)
-        }
+        return getThemedVisualsHelper(visuals[chosenTheme.rawValue]!)
     }
     
 //    if desired emojis > available, return all indices else return an array of size desired with random indices from the theme

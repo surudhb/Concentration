@@ -9,7 +9,8 @@
 import Foundation
 
 struct Card {
-    let id = Card.generateUUID()
+    
+    private let id = Card.generateUUID()
     public var isSelected = false
     public var isMatched = false
     
@@ -18,8 +19,15 @@ struct Card {
         unusedID += 1
         return unusedID
     }
-//    TODO: This really shouldn't exist. Card Id's should not break game
-    public static func resetUUIDGenerator() {
-        unusedID = 0
+}
+
+extension Card : Hashable {
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func ==(lhs: Card, rhs: Card) -> Bool {
+        return lhs.id == rhs.id
     }
 }

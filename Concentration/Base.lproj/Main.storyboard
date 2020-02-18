@@ -208,6 +208,7 @@
                     </view>
                     <connections>
                         <outlet property="flipsLabel" destination="739-6K-QHF" id="mU4-M6-WIE"/>
+                        <outlet property="mainView" destination="8bC-Xf-vdC" id="Qxd-sr-FgF"/>
                         <outletCollection property="cardButtons" destination="p5r-uR-GPn" collectionClass="NSMutableArray" id="xzI-bH-BzK"/>
                         <outletCollection property="cardButtons" destination="JHD-9c-AlV" collectionClass="NSMutableArray" id="dw3-Y9-x9M"/>
                         <outletCollection property="cardButtons" destination="G2G-2P-1Xo" collectionClass="NSMutableArray" id="Trv-s4-ZwT"/>

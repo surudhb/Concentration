@@ -33,9 +33,7 @@ class Concentration {
         cards.shuffle()
     }
 
-//    TODO: Remove use of this function
     private func endGame() {
-        Card.resetUUIDGenerator()
         cards = []
         cardFlips = 0
     }
@@ -47,10 +45,10 @@ class Concentration {
     
     private func updateMatches() {
         let selectedCards = cards.filter{ $0.isSelected }
-        if selectedCards.count == 2 && selectedCards[0].id == selectedCards[1].id {
+        if selectedCards.count == 2 && selectedCards[0] == selectedCards[1] {
             cards = cards.map{(card) -> Card in
                 var tempCard = card
-                if selectedCards.contains(where: {$0.id == tempCard.id}) {
+                if selectedCards.contains(where: {$0 == tempCard}) {
                     tempCard.isMatched = true
                 }
                 return tempCard
@@ -71,7 +69,7 @@ class Concentration {
     }
  
     private func matchingCardsSelected(_ first: Int,_ second: Int) -> Bool {
-        return cards[first].id == cards[second].id
+        return cards[first] == cards[second]
     }
     
     public func updateFlips(indexOfCardChosen: Int) {
