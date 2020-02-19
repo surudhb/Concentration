@@ -57,8 +57,7 @@ class ViewController: UIViewController {
             .strokeWidth: 5.0,
             .strokeColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         ]
-        let attributedString = NSAttributedString(string: "Flips: \(game.cardFlips)", attributes: attributes)
-        flipsLabel.attributedText = attributedString
+        flipsLabel.attributedText = NSAttributedString(string: "Flips: \(game.cardFlips)", attributes: attributes)
     }
     
     private func updateCardButtons() {

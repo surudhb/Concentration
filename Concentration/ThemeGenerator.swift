@@ -20,11 +20,7 @@ class ThemeGenerator {
         case FALL
     }
     
-    public var chosenTheme = Theme.FALL {
-        didSet {
-            validVisualIndices = getThemedVisuals()
-        }
-    }
+    public var chosenTheme = Theme.FALL { didSet { validVisualIndices = getThemedVisuals() } }
     private var numVisualsDesired = 0
     private(set) var validVisualIndices = [Int]()
     
@@ -52,7 +48,7 @@ class ThemeGenerator {
     
     public func toggle() {
         if chosenTheme == Theme.WINTER { chosenTheme = Theme.SPRING }
-         else if chosenTheme == Theme.SPRING { chosenTheme = Theme.SUMMER }
+        else if chosenTheme == Theme.SPRING { chosenTheme = Theme.SUMMER }
         else if chosenTheme == Theme.SUMMER { chosenTheme = Theme.FALL }
         else if chosenTheme == Theme.FALL { chosenTheme = Theme.WINTER }
     }
@@ -63,8 +59,7 @@ class ThemeGenerator {
     
 //    if desired emojis > available, return all indices else return an array of size desired with random indices from the theme
     private func getThemedVisualsHelper(_ visuals: [String]) -> [Int] {
-        let visualsAvailable = visuals.count
-        if(numVisualsDesired >= visualsAvailable) {
+        if(numVisualsDesired >= visuals.count) {
             return Array(visuals.indices)
         } else {
             return Array(Array(visuals.indices).shuffled().prefix(numVisualsDesired))
