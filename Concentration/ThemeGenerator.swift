@@ -20,9 +20,12 @@ class ThemeGenerator {
         case FALL
     }
     
-    public var chosenTheme = Theme.FALL
+    public var chosenTheme = Theme.FALL {
+        didSet {
+            validVisualIndices = getThemedVisuals()
+        }
+    }
     private var numVisualsDesired = 0
-    private(set) var themeKeyname = ""
     private(set) var validVisualIndices = [Int]()
     
     init(chosenTheme: ThemeGenerator.Theme, visualsDesired: Int) {
@@ -30,26 +33,32 @@ class ThemeGenerator {
         self.chosenTheme = chosenTheme
         numVisualsDesired = visualsDesired
         validVisualIndices = getThemedVisuals()
-        themeKeyname = chosenTheme.rawValue
     }
     
 
-    let colorPalette : [String:(cardFaceUp: UIColor, cardFaceDown: UIColor, background: UIColor)] = [
-        "WINTER" : (UIColor.blue, UIColor.white, UIColor.red),
-        "SPRING" : (UIColor.cyan, UIColor.yellow, UIColor.green),
-        "SUMMER" : (UIColor.red, UIColor.yellow, UIColor.cyan),
-        "FALL" : (UIColor.black, UIColor.orange, UIColor.brown)
+    let colorPalette : [Theme:(cardFaceUp: UIColor, cardFaceDown: UIColor, background: UIColor)] = [
+        Theme.WINTER : (UIColor.blue, UIColor.white, UIColor.red),
+        Theme.SPRING : (UIColor.cyan, UIColor.yellow, UIColor.green),
+        Theme.SUMMER : (UIColor.red, UIColor.yellow, UIColor.cyan),
+        Theme.FALL : (UIColor.black, UIColor.orange, UIColor.brown)
     ]
     
     let visuals = [
-        "WINTER" : ["🏂", "❄️", "⛄️", "🎿", "🥶", "⛷", "☃️", "☕️", "🧊", "⛸", "🏒", "🎅🏻", "🤧", "🤒", "🤶🏻", "🧶", "🐻"],
-        "SPRING" : ["🌷", "🌸", "🌼", "🌧", "🌈", "🌦", "🛀🏻", "🚿", "🐛", "🐞", "🍃", "🍏", "🦋", "🌴", "⛹🏻‍♂️", "⚽️", "🐣"],
-        "SUMMER" : ["🏄🏻‍♀️", "🤽🏻", "🧗🏻‍♀️", "🏏", "🍹", "🥑", "🍎", "☀️", "🌺", "🎋", "🐳", "🧜🏻‍♀️", "🥵", "🏖", "🏊🏻‍♀️", "🏕", "😎"],
-        "FALL" : ["🎃", "💀", "👻", "🎐", "😱", "😰", "☠️", "😈", "🧛🏻‍♂️", "🧟‍♀️", "🦸🏻‍♀️", "🧝🏻‍♀️", "🤡", "👽", "🍁","🦇", "🏜"]
+        Theme.WINTER : ["🏂", "❄️", "⛄️", "🎿", "🥶", "⛷", "☃️", "☕️", "🧊", "⛸", "🏒", "🎅🏻", "🤧", "🤒", "🤶🏻", "🧶", "🐻"],
+        Theme.SPRING : ["🌷", "🌸", "🌼", "🌧", "🌈", "🌦", "🛀🏻", "🚿", "🐛", "🐞", "🍃", "🍏", "🦋", "🌴", "⛹🏻‍♂️", "⚽️", "🐣"],
+        Theme.SUMMER : ["🏄🏻‍♀️", "🤽🏻", "🧗🏻‍♀️", "🏏", "🍹", "🥑", "🍎", "☀️", "🌺", "🎋", "🐳", "🧜🏻‍♀️", "🥵", "🏖", "🏊🏻‍♀️", "🏕", "😎"],
+        Theme.FALL : ["🎃", "💀", "👻", "🎐", "😱", "😰", "☠️", "😈", "🧛🏻‍♂️", "🧟‍♀️", "🦸🏻‍♀️", "🧝🏻‍♀️", "🤡", "👽", "🍁","🦇", "🏜"]
     ]
     
+    public func toggle() {
+        if chosenTheme == Theme.WINTER { chosenTheme = Theme.SPRING }
+         else if chosenTheme == Theme.SPRING { chosenTheme = Theme.SUMMER }
+        else if chosenTheme == Theme.SUMMER { chosenTheme = Theme.FALL }
+        else if chosenTheme == Theme.FALL { chosenTheme = Theme.WINTER }
+    }
+    
     private func getThemedVisuals() -> [Int] {
-        return getThemedVisualsHelper(visuals[chosenTheme.rawValue]!)
+        return getThemedVisualsHelper(visuals[chosenTheme]!)
     }
     
 //    if desired emojis > available, return all indices else return an array of size desired with random indices from the theme

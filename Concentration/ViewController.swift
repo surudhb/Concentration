@@ -20,6 +20,11 @@ class ViewController: UIViewController {
     }
     @IBOutlet var mainView: UIView! { didSet { initView() } }
     
+    @IBAction private func toggleMysteryButton(_ sender: UIButton) {
+        theme.toggle()
+        initView()
+    }
+    
     private var game : Concentration!
     private var theme : ThemeGenerator!
     
@@ -59,14 +64,14 @@ class ViewController: UIViewController {
     private func updateCardButtons() {
         for (index, card) in game.cards.enumerated() {
             if card.isSelected || card.isMatched {
-                cardButtons[index].setTitle("\(theme.visuals[theme.themeKeyname]![cardToVisualMap[card]!])", for: UIControl.State.normal)
-                cardButtons[index].backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : theme.colorPalette[theme.themeKeyname]!.cardFaceUp
+                cardButtons[index].setTitle("\(theme.visuals[theme.chosenTheme]![cardToVisualMap[card]!])", for: UIControl.State.normal)
+                cardButtons[index].backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : theme.colorPalette[theme.chosenTheme]!.cardFaceUp
             } else {
                 cardButtons[index].setTitle("", for: UIControl.State.normal)
-                cardButtons[index].backgroundColor = theme.colorPalette[theme.themeKeyname]!.cardFaceDown
+                cardButtons[index].backgroundColor = theme.colorPalette[theme.chosenTheme]!.cardFaceDown
             }
         }
-        mainView.backgroundColor = theme.colorPalette[theme.themeKeyname]!.background
+        mainView.backgroundColor = theme.colorPalette[theme.chosenTheme]!.background
     }
     
     private func updateViewFromModel() {
