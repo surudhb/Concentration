@@ -25,6 +25,7 @@
 # Screenshots
 
 * Demos showcasing the completed implementation of one round of the game
+
 ![demo-1](https://github.com/surudhb/Concentration/blob/master/Demos/Demo1.gif) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![demo-2](https://github.com/surudhb/Concentration/blob/master/Demos/Demo2.gif)
 
 * Demos showcasing the ability to change "themes" at any point
