@@ -29,3 +29,5 @@
 ![demo-1](https://github.com/surudhb/Concentration/blob/master/Demos/Demo1.gif) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![demo-2](https://github.com/surudhb/Concentration/blob/master/Demos/Demo2.gif)
 
 * Demos showcasing the ability to change "themes" at any point
+
+![demo-3](https://github.com/surudhb/Concentration/blob/master/Demos/Demo3.gif)
